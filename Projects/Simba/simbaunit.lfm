@@ -6,7 +6,7 @@ object SimbaForm: TSimbaForm
   ActiveControl = ScriptPanel
   AllowDropFiles = True
   Caption = 'THA FUKING Simba'
-  ClientHeight = 651
+  ClientHeight = 646
   ClientWidth = 660
   KeyPreview = True
   Menu = MainMenu
@@ -16,7 +16,7 @@ object SimbaForm: TSimbaForm
   OnDropFiles = FormDropFiles
   OnHide = doOnHide
   OnShortCut = FormShortCuts
-  LCLVersion = '1.4.5.0'
+  LCLVersion = '1.6.0.4'
   Visible = True
   object ToolBar1: TToolBar
     Left = 0
@@ -249,8 +249,8 @@ object SimbaForm: TSimbaForm
   end
   object StatusBar: TStatusBar
     Left = 0
-    Height = 23
-    Top = 628
+    Height = 29
+    Top = 617
     Width = 660
     Panels = <    
       item
@@ -272,7 +272,7 @@ object SimbaForm: TSimbaForm
   object PanelMemo: TPanel
     Left = 0
     Height = 154
-    Top = 474
+    Top = 463
     Width = 660
     Align = alBottom
     ClientHeight = 154
@@ -296,19 +296,19 @@ object SimbaForm: TSimbaForm
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 469
+    Top = 458
     Width = 660
     Align = alBottom
     ResizeAnchor = akBottom
   end
   object ScriptPanel: TPanel
     Left = 0
-    Height = 445
+    Height = 434
     Top = 24
     Width = 660
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 445
+    ClientHeight = 434
     ClientWidth = 660
     DockSite = True
     TabOrder = 4
@@ -316,7 +316,7 @@ object SimbaForm: TSimbaForm
     OnDockOver = ScriptPanelDockOver
     object PageControl1: TPageControl
       Left = 155
-      Height = 410
+      Height = 399
       Top = 0
       Width = 350
       Align = alClient
@@ -334,7 +334,7 @@ object SimbaForm: TSimbaForm
     object SearchPanel: TPanel
       Left = 0
       Height = 35
-      Top = 410
+      Top = 399
       Width = 660
       Align = alBottom
       BevelOuter = bvSpace
@@ -428,7 +428,7 @@ object SimbaForm: TSimbaForm
       end
       object LabeledEditSearch: TLabeledEdit
         Left = 79
-        Height = 23
+        Height = 28
         Top = 8
         Width = 248
         EditLabel.AnchorSideTop.Control = LabeledEditSearch
@@ -436,10 +436,10 @@ object SimbaForm: TSimbaForm
         EditLabel.AnchorSideRight.Control = LabeledEditSearch
         EditLabel.AnchorSideBottom.Control = LabeledEditSearch
         EditLabel.AnchorSideBottom.Side = asrBottom
-        EditLabel.Left = 47
-        EditLabel.Height = 15
+        EditLabel.Left = 41
+        EditLabel.Height = 20
         EditLabel.Top = 12
-        EditLabel.Width = 29
+        EditLabel.Width = 35
         EditLabel.Caption = 'Find: '
         EditLabel.ParentColor = False
         LabelPosition = lpLeft
@@ -452,9 +452,9 @@ object SimbaForm: TSimbaForm
       end
       object CheckBoxMatchCase: TCheckBox
         Left = 398
-        Height = 19
+        Height = 24
         Top = 10
-        Width = 80
+        Width = 98
         Caption = 'Match case'
         OnClick = CheckBoxMatchCaseClick
         TabOrder = 1
@@ -478,38 +478,37 @@ object SimbaForm: TSimbaForm
     end
     object SplitterFunctionList: TSplitter
       Left = 150
-      Height = 410
+      Height = 399
       Top = 0
       Width = 5
       OnCanResize = SplitterFunctionListCanResize
       Visible = False
     end
     inline frmFunctionList: TFunctionListFrame
-      Height = 410
+      Height = 399
       Width = 150
-      ClientHeight = 410
+      ClientHeight = 399
       ClientWidth = 150
       OnEndDock = nil
       TabOrder = 3
       inherited FunctionList: TTreeView
-        Height = 365
-        Top = 19
+        Height = 349
+        Top = 24
         Width = 150
+        DefaultItemHeight = 22
         HideSelection = True
         Images = nil
-        ShowLines = True
-        ShowRoot = True
         OnChange = FunctionListChange
         OnEnter = FunctionListEnter
         OnExit = FunctionListExit
         Options = [tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips]
       end
       inherited FunctionListLabel: TLabel
-        Height = 15
+        Height = 20
         Width = 146
       end
       inherited Panel1: TPanel
-        Top = 384
+        Top = 373
         Width = 150
         ClientWidth = 150
         inherited ClearSearch: TSpeedButton
@@ -602,7 +601,7 @@ object SimbaForm: TSimbaForm
     end
     object NotesMemo: TMemo
       Left = 510
-      Height = 410
+      Height = 399
       Top = 0
       Width = 150
       Align = alRight
@@ -613,7 +612,7 @@ object SimbaForm: TSimbaForm
     end
     object NotesSplitter: TSplitter
       Left = 505
-      Height = 410
+      Height = 399
       Top = 0
       Width = 5
       Align = alRight

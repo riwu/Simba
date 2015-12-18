@@ -78,7 +78,7 @@ type
     function GetTypeProcs(Names: TStrings; const Prefix: string; WithParams: Boolean): TDeclarationArray;
     function FindProcedure(ProcNameToFind: string; out Decl: TDeclaration; out HasParams: Boolean): boolean;
     procedure FillProposal;
-    procedure FillSynCompletionProposal(ItemList, InsertList: TStrings; Prefix: string = '');
+    procedure FillSynCompletionProposal(ItemList, InsertList: TStringList; Prefix: string = '');
 
     property OnFindInclude: TOnFindInclude read fOnFindInclude write fOnFindInclude;
     property OnLoadLibrary: TOnLoadLibrary read fOnLoadLibrary write fOnLoadLibrary;
@@ -1654,7 +1654,7 @@ begin
       Exit(True);
 end;
 
-procedure TCodeInsight.FillSynCompletionProposal(ItemList, InsertList: TStrings; Prefix: string = '');
+procedure TCodeInsight.FillSynCompletionProposal(ItemList, InsertList: TStringList; Prefix: string = '');
 
   procedure AddFile(Item: TCodeInsight; ItemList, InsertList: TStrings);
   var
@@ -1776,6 +1776,23 @@ var
   FoundItems: TDeclarationArray;
   NamesList: TStringList;
   dType, Parent, Str, TypeStr: string;
+  keywords: array[0..25] of string = (
+   // 'tTextureRecord', 'cCharRecord', 'mModelRecord',//temporary
+    'a:= G(123456);', 'a: Int64;',
+    'begin .. end', 'break;', 'Boolean',
+    'continue;', 'const',
+    'do',
+    'else', 'end;', 'except',
+    'function ', 'finally',
+    'Integer', 'Int64',
+    'overload;', 'override;', 'of',
+    'procedure ',
+    'result:= ',
+    'String',
+    'then', 'type', 'try',
+    'var',
+    'writeln('
+     );
 begin
   ItemList.BeginUpdate;
   InsertList.BeginUpdate;
@@ -1885,6 +1902,16 @@ begin
       AddFile(Self, ItemList, InsertList);
       for i := 0 to High(CoreBuffer) do
         AddFile(CoreBuffer[i], ItemList, InsertList);
+
+      if SimbaSettings.CodeCompletion.Advanced.Value then
+      begin
+        insertList.Sorted := false;
+        for i := High(keywords) downto 0 do
+        begin
+          insertList.Insert(0, keywords[i]);
+          ItemList.Insert(0, '{#clNavy}keyword{#0} {|}{B+}' + keywords[i] + '{B-}');
+        end;
+      end;
     end;
   finally
     ItemList.EndUpdate;

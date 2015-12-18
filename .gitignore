@@ -10,4 +10,5 @@
 *.log
 default.simba
 settings.xml
-^build\/
+build
+*.exe

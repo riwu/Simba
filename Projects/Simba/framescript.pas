@@ -248,18 +248,28 @@ procedure TScriptFrame.SynEditCommandProcessed(Sender: TObject;
 var
   Command2 : TSynEditorCommand;
   s: string;
-  sp, ep: Integer;
+  sp, ep, i: Integer;
+  valid: Boolean;
 begin
   if (Command = ecChar) then
-    if(AChar = '(') and (SimbaForm.ParamHint.Visible = False) and (SimbaForm.ShowParamHintAuto) then
+    if(AChar = '(') and (not SimbaForm.ParamHint.Visible) and (SimbaForm.ShowParamHintAuto) then
     begin
       Command2:= ecCodeHints;
       SynEditProcessUserCommand(sender,command2,achar,nil);
     end
-    else if(AChar = '.') and (SimbaForm.CodeCompletionForm.Visible = False) and (SimbaForm.ShowCodeCompletionAuto) then
+    else if (not SimbaForm.CodeCompletionForm.Visible) then
     begin
-      Command2:= ecCodeCompletion;
-      SynEditProcessUserCommand(sender,command2,achar, Pointer(@s));
+      valid := false;
+      for i:=ord('a') to ord('z') do
+        if AChar = chr(i) then
+          valid := true;
+      if AChar = '_' then
+        valid := true;
+      if (valid and SimbaSettings.CodeCompletion.Advanced.Value) or ((AChar = '.') and SimbaForm.ShowCodeCompletionAuto) then
+      begin
+        Command2:= ecCodeCompletion;
+        SynEditProcessUserCommand(sender,command2,achar, Pointer(@s));
+      end;
     end;
 
   if SimbaForm.CodeCompletionForm.Visible then
@@ -314,8 +324,16 @@ begin
 end;
 
 procedure TScriptFrame.SynEditKeyPress(Sender: TObject; var Key: char);
+var
+  temp: char;
 begin
-  SimbaForm.CodeCompletionForm.HandleKeyPress(Sender, Key);
+  temp := Key;
+  if Key in ['(', ';', ':'] then
+    if ((Pos('procedure ', SynEdit.LineText) > 0) or (Pos('function ', SynEdit.LineText) > 0)) and
+       (Pos(';', SynEdit.LineText) = 0) and SimbaSettings.CodeCompletion.Advanced.Value then
+      temp := 'a'; //diable auto complete
+
+  SimbaForm.CodeCompletionForm.HandleKeyPress(Sender, temp);
 end;
 
 procedure TScriptFrame.SynEditMouseLink(Sender: TObject; X, Y: Integer;
@@ -398,7 +416,7 @@ begin
       end;
 
       if (Data <> nil) then //If showing automatically
-        if (s <> '') and ((mp.DeclarationAtPos <> nil) and ((mp.DeclarationAtPos is TciCompoundStatement) or mp.DeclarationAtPos.HasOwnerClass(TciCompoundStatement, d, True))) then
+        if SimbaSettings.CodeCompletion.Advanced.Value or ((s <> '') and ((mp.DeclarationAtPos <> nil) and ((mp.DeclarationAtPos is TciCompoundStatement) or mp.DeclarationAtPos.HasOwnerClass(TciCompoundStatement, d, True)))) then
           Data := nil;
       if (Data = nil) then
       begin
@@ -418,7 +436,7 @@ begin
   else if (Command = ecCodeHints) and ((not SynEdit.GetHighlighterAttriAtRowCol(Point(SynEdit.CaretX - 1, SynEdit.CaretY), s, Attri)) or
                                       ((Attri.Name <> SYNS_AttrComment) and (Attri.name <> SYNS_AttrString) and (Attri.name <> SYNS_AttrDirective))) then
   begin
-    if SimbaForm.ParamHint.Visible = true then
+    if SimbaForm.ParamHint.Visible then
       SimbaForm.ParamHint.hide;
 
     mp := TCodeInsight.Create;

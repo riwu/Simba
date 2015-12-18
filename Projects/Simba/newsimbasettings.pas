@@ -239,6 +239,7 @@ type
 
     TCodeCompletionSection = class(TSection)
       ShowAutomatically: TBooleanSetting;
+      Advanced: TBooleanSetting;
     end;
 
     TScriptManagerSection = class(TSection)
@@ -861,6 +862,7 @@ procedure GetFunctionListShowOnStart(obj: TSetting); begin TBooleanSetting(obj).
 
 procedure GetCodeHintsShowAutomatically(obj: TSetting); begin TBooleanSetting(obj).Value := True; end;
 procedure GetCodeCompletionShowAutomatically(obj: TSetting); begin TBooleanSetting(obj).Value := True; end;
+procedure GetCodeCompletionAdvanced(obj: TSetting); begin TBooleanSetting(obj).Value := False; end;
 
 procedure GetShowBalloonHints(obj: TSetting); begin TBooleanSetting(obj).Value := True; end;
 
@@ -1010,6 +1012,8 @@ begin
   CodeCompletion := AddChild(TCodeCompletionSection.Create()) as TCodeCompletionSection;
   CodeCompletion.ShowAutomatically := CodeCompletion.AddChild(TBooleanSetting.Create(ssCodeCompletionShowAutomatically)) as TBooleanSetting;
   CodeCompletion.ShowAutomatically.onDefault := @GetCodeCompletionShowAutomatically;
+  CodeCompletion.Advanced := CodeCompletion.AddChild(TBooleanSetting.Create(ssCodeCompletionAdvanced)) as TBooleanSetting;
+  CodeCompletion.Advanced.onDefault := @GetCodeCompletionAdvanced;
 
   Notes := AddChild(TNotesSection.Create()) as TNotesSection;
   Notes.Content := Notes.AddChild(TStringSetting.Create(ssNotesContent)) as TStringSetting;

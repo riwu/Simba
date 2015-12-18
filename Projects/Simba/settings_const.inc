@@ -52,6 +52,7 @@ ssScriptsPath = ssSettings + ssScripts + 'Path';
 
 ssCodeHintsShowAutomatically = ssSettings + ssCodeInsight + 'CodeHints/ShowAutomatically';
 ssCodeCompletionShowAutomatically = ssSettings + ssCodeInsight + 'CodeCompletion/ShowAutomatically';
+ssCodeCompletionAdvanced = ssSettings + ssCodeInsight + 'CodeCompletion/Advanced';
 
 ssShowBalloonHints = ssSettings + 'ShowBalloonHints';
 

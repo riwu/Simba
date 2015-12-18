@@ -32,6 +32,7 @@ type
     procedure setFilter(Filter: string);
 
     procedure DblClick; override;
+    procedure DblClick(Sender: TObject); overload;
     {$IFDEF ccFORMCAPTION}
     procedure DoSelectionChange(User: Boolean); override;
     {$ENDIF}
@@ -108,7 +109,7 @@ type
 implementation
 
 uses
-  StrUtils {$IFDEF FPC}, lclintf{$ENDIF},math, Themes, mufasabase;
+  StrUtils {$IFDEF FPC}, lclintf{$ENDIF},math, Themes, mufasabase, newsimbasettings;
 
 procedure TAutoCompleteListBox.setItemList(List: TStrings);
 begin
@@ -308,6 +309,76 @@ procedure TAutoCompleteListBox.DblClick;
 begin
   if (Assigned(InsertProc)) then
     InsertProc(GetInsert);
+
+  if (Owner is TForm) then
+    TForm(Owner).Hide;
+end;
+
+procedure TAutoCompleteListBox.DblClick(Sender: TObject);
+var
+  numOfSpaces: Integer;
+  insert: String;
+  synEdit: TSynEdit;
+  letter: char;
+begin
+  if (Assigned(InsertProc)) then
+  begin
+    insert := GetInsert();
+    case insert of
+      'begin .. end':
+      begin
+        synEdit:= TSynEdit(Sender);
+        numOfSpaces:= Pos(insert[1], synEdit.LineText);
+        if numOfSpaces = 0 then
+          numOfSpaces:= synEdit.CaretX;
+        insert:= 'begin' + #10#10 + PadLeft('end;', numOfSpaces + 3);
+        InsertProc(insert);
+        synEdit.CaretX:= synEdit.CaretX - 2;
+        synEdit.CaretY:= synEdit.CaretY - 1;
+      end;
+      'do', 'then', 'else':   //goes to next line at
+      begin
+        synEdit:= TSynEdit(Sender);
+        numOfSpaces:= 1;
+        for letter in synEdit.LineText do
+          if letter = ' ' then
+            Inc(numOfSpaces)
+          else
+            break;
+
+        insert:= insert + #10;
+        InsertProc(insert);
+        synEdit.CaretX:= numOfSpaces;
+      end;
+      'a:= G(123456);':
+      begin
+        synEdit:= TSynEdit(Sender);
+        numOfSpaces:= Pos(insert[1], synEdit.LineText);
+        insert:= insert + #10 +
+                 PadLeft('repeat', numOfSpaces + 5) + #10#10 +
+                 PadLeft('W;', numOfSpaces + 3) + #10 +
+                 PadLeft('if G > a then', numOfSpaces + 14) + #10 +
+                 PadLeft('Z(''Time out waiting!'');', numOfSpaces + 26) + #10 +
+                 PadLeft('until False;', numOfSpaces + 11);
+        InsertProc(insert);
+        synEdit.CaretY := synEdit.CaretY - 4;
+        synEdit.CaretX := synEdit.CaretX - 10;
+      end;
+      'var', 'const', 'type', 'try', 'except', 'finally', 'of':  //goes to next line with a tab
+      begin
+        synEdit:= TSynEdit(Sender);
+        numOfSpaces:= Pos(insert[1], synEdit.LineText);
+        if numOfSpaces = 0 then
+          numOfSpaces:= synEdit.CaretX;
+        insert:= insert + #10;
+        InsertProc(insert);
+        synEdit.CaretX:= numOfSpaces + 2;
+      end;
+      else
+        InsertProc(insert);   //to do: add t:=g(14444), repeat until
+    end;
+  end;
+
   if (Owner is TForm) then
     TForm(Owner).Hide;
 end;
@@ -546,8 +617,16 @@ begin
       VK_DOWN:
         if (ListBox.Count > 0) and (ListBox.ItemIndex + 1 < ListBox.Count) then
           ListBox.ItemIndex := ListBox.ItemIndex + 1;
-      VK_RETURN, VK_TAB:
-        ListBox.DblClick;
+      VK_RETURN:
+      begin
+        if SimbaSettings.CodeCompletion.Advanced.Value then
+          ListBox.DblClick(Sender)
+        else
+          ListBox.DblClick();
+      end;
+      VK_TAB:
+        if (not SimbaSettings.CodeCompletion.Advanced.Value) then
+          ListBox.DblClick();
       VK_ESCAPE:
         Hide;
       else
@@ -560,7 +639,7 @@ end;
 procedure TAutoCompletePopup.HandleKeyPress(Sender: TObject; var Key: char);
 begin
   if Visible and (not (Key in ['a'..'z', 'A'..'Z', '0'..'9', '_'])) then
-    if (Key in ['.', '(', '[', ';', ':']) then
+    if (not SimbaSettings.CodeCompletion.Advanced.Value) and (Key in ['.', '(', '[', ';', ':']) then
       ListBox.DblClick
     else
       Hide;

@@ -557,7 +557,7 @@ type
   function GetMethodName( Decl : string; PlusNextChar : boolean) : string;
 
 const
-  WindowTitle = 'Simba - %s';//Title, where %s = the place of the filename.
+  WindowTitle = '%s';//Title, where %s = the place of the filename.
 
   Panel_State = 0;
   Panel_Coords = 1;
@@ -4057,7 +4057,7 @@ end;
 
 procedure TSimbaForm.UpdateTitle;
 begin
-  Application.Title:= PChar('Simba'); // XXX - Sure you want to do this for Disguise?
+  Application.Title:= PChar(CurrScript.ScriptName); // XXX - Sure you want to do this for Disguise?
   if CurrScript.ScriptChanged then
   begin;
     CurrTab.TabSheet.Caption:= CurrScript.ScriptName + '*';
