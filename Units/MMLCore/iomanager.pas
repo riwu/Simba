@@ -1055,9 +1055,8 @@ begin
   begin
     MouseApplyAreaOffset(x, y);
     case button of
-      mouse_Left:   client.HoldMouse(target,x,y,1);
-      mouse_Middle: client.HoldMouse(target,x,y,2);
-      mouse_Right:  client.HoldMouse(target,x,y,3);
+      LEFT_MOUSE:   client.HoldMouse(target,x,y,1);
+      RIGHT_MOUSE:  client.HoldMouse(target,x,y,3);
     end;
   end else
     inherited HoldMouse(x,y,button);
@@ -1068,9 +1067,8 @@ begin
   begin
     MouseApplyAreaOffset(x, y);
     case button of
-      mouse_Left:   client.ReleaseMouse(target,x,y,1);
-      mouse_Middle: client.ReleaseMouse(target,x,y,2);
-      mouse_Right:  client.ReleaseMouse(target,x,y,3);
+      LEFT_MOUSE:   client.ReleaseMouse(target,x,y,1);
+      RIGHT_MOUSE:  client.ReleaseMouse(target,x,y,3);
     end;
   end else
     inherited ReleaseMouse(x,y,button);
@@ -1081,9 +1079,8 @@ begin
   if Pointer(client.IsMouseButtonHeld) <> nil then
   begin
     case button of
-      mouse_Left:  result := client.IsMouseButtonHeld(target,1);
-      mouse_Middle: result := client.IsMouseButtonHeld(target,2);
-      mouse_Right: result := client.IsMouseButtonHeld(target,3);
+      LEFT_MOUSE:  result := client.IsMouseButtonHeld(target,1);
+      RIGHT_MOUSE: result := client.IsMouseButtonHeld(target,3);
     end;
   end else
     result := inherited IsMouseButtonHeld(button);
@@ -1385,27 +1382,27 @@ procedure TTarget_Exported_HoldMouse(target: pointer; x, y: integer;
   left: boolean); stdcall;
 begin
   if left then
-    TTarget(Target).HoldMouse(x,y,mouse_left)
+    TTarget(Target).HoldMouse(x,y,LEFT_MOUSE)
   else
-    TTarget(Target).HoldMouse(x,y,mouse_right);
+    TTarget(Target).HoldMouse(x,y,RIGHT_MOUSE);
 end;
 
 procedure TTarget_Exported_ReleaseMouse(target: pointer; x, y: integer;
   left: boolean); stdcall;
 begin
   if left then
-    TTarget(Target).ReleaseMouse(x,y,mouse_left)
+    TTarget(Target).ReleaseMouse(x,y,LEFT_MOUSE)
   else
-    TTarget(Target).ReleaseMouse(x,y,mouse_right);
+    TTarget(Target).ReleaseMouse(x,y,RIGHT_MOUSE);
 end;
 
 function TTarget_Exported_IsMouseButtonHeld(target: pointer; left: boolean
   ): boolean; stdcall;
 begin
   if left then
-    result := TTarget(Target).IsMouseButtonHeld(mouse_left)
+    result := TTarget(Target).IsMouseButtonHeld(LEFT_MOUSE)
   else
-    result := TTarget(Target).IsMouseButtonHeld(mouse_right);
+    result := TTarget(Target).IsMouseButtonHeld(RIGHT_MOUSE);
 end;
 
 procedure TTarget_Exported_SendString(target: pointer; str: PChar; keywait, keymodwait: integer); stdcall;

@@ -33,9 +33,6 @@ uses
 const
   DS = DirectorySeparator;
   MEOL = {$ifdef MSWINDOWS}#13+{$endif}#10;
-  ps_mouse_right = 0;
-  ps_mouse_left = 1;
-  ps_mouse_middle = 2;
 
 { Overloaded Operators}
 
@@ -91,7 +88,7 @@ type
   TBmpResizeMethod = (RM_Nearest, RM_Bilinear);
 
   TTargetWindowMode = (w_BMP, w_Window, w_HDC, w_ArrayPtr, w_XWindow);
-  TClickType = (mouse_Left, mouse_Right, mouse_Middle);
+  TClickType = (LEFT_MOUSE, RIGHT_MOUSE, MOVE_MOUSE, NONE_MOUSE);
   TMousePress = (mouse_Down, mouse_Up);
 
   PBmpThreshMethod = ^TBmpThreshMethod;

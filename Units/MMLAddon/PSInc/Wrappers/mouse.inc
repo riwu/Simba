@@ -35,33 +35,23 @@ procedure ps_GetMousePos(var x, y: integer); extdecl;
 begin
    CurrThread.Client.IOManager.GetMousePos(X, Y);
 end;
-function ConvIntClickType(Int : Integer) : TClickType;inline;
-begin;
-  case int of
-    ps_mouse_right : result := mouse_Right;
-    ps_mouse_left : result := mouse_left;
-    ps_mouse_middle: result := mouse_middle;
-  else
-    raise exception.CreateFMT('Unknown Clicktype (%d) passed.',[int]);
-  end;
+
+procedure ps_HoldMouse(x, y: integer; clickType: TClickType); extdecl;
+begin
+   CurrThread.Client.IOManager.HoldMouse(x, y, clickType);
 end;
 
-procedure ps_HoldMouse(x, y: integer; clickType: integer); extdecl;
+procedure ps_ReleaseMouse(x, y: integer; clickType: TClickType); extdecl;
 begin
-   CurrThread.Client.IOManager.HoldMouse(x, y, ConvIntClickType(clickType));
+   CurrThread.Client.IOManager.ReleaseMouse(x, y, clickType);
 end;
 
-procedure ps_ReleaseMouse(x, y: integer; clickType: integer); extdecl;
+procedure ps_ClickMouse(x, y: integer; clickType: TClickType); extdecl;
 begin
-   CurrThread.Client.IOManager.ReleaseMouse(x, y, ConvIntClickType(clickType));
+   CurrThread.Client.IOManager.ClickMouse(x, y, clickType);
 end;
 
-procedure ps_ClickMouse(x, y: integer; clickType: integer); extdecl;
+function  ps_IsMouseButtonDown( button : TClickType) : boolean; extdecl;
 begin
-   CurrThread.Client.IOManager.ClickMouse(x, y, ConvIntClickType(clickType));
-end;
-
-function  ps_IsMouseButtonDown( button : integer) : boolean; extdecl;
-begin
-  result := CurrThread.Client.IOManager.IsMouseButtonDown(ConvIntClickType(button));
+  result := CurrThread.Client.IOManager.IsMouseButtonDown(button);
 end;

@@ -342,10 +342,9 @@ SetCurrSection('Mouse');
 AddGlobalFunc('procedure MoveMouse(x, y: integer);', @Lape_MoveMouse);
 AddGlobalFunc('procedure ScrollMouse(x,y: integer; Clicks: integer);', @Lape_ScrollMouse);
 AddGlobalFunc('procedure GetMousePos(var x, y: integer);', @Lape_GetMousePos);
-AddGlobalFunc('function ConvIntClickType(Int: Integer): TClickType', @Lape_ConvIntClickType);
-AddGlobalFunc('procedure HoldMouse(x, y: integer; clickType: integer);', @Lape_HoldMouse);
-AddGlobalFunc('procedure ReleaseMouse(x, y: integer; clickType: integer);', @Lape_ReleaseMouse);
-AddGlobalFunc('procedure ClickMouse(x, y: integer; clickType: integer);', @Lape_ClickMouse);
+AddGlobalFunc('procedure HoldMouse(x, y: integer; clickType: TClickType);', @Lape_HoldMouse);
+AddGlobalFunc('procedure ReleaseMouse(x, y: integer; clickType: TClickType);', @Lape_ReleaseMouse);
+AddGlobalFunc('procedure ClickMouse(x, y: integer; clickType: TClickType);', @Lape_ClickMouse);
 AddGlobalFunc('function IsMouseButtonDown(button: integer): boolean', @Lape_IsMouseButtonDown);
 
 { Keyboard }

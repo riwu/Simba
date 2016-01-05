@@ -484,9 +484,8 @@ implementation
     FillChar(event, SizeOf(event), 0);
 
     case button of
-      mouse_Left:   event.button := Button1;
-      mouse_Middle: event.button := Button2;
-      mouse_Right:  event.button := Button3;
+      LEFT_MOUSE:   event.button := Button1;
+      RIGHT_MOUSE:  event.button := Button3;
     end;
     event.same_screen := cint(0);
     event.subwindow := window;
@@ -514,9 +513,8 @@ implementation
     FillChar(event, SizeOf(event), 0);
 
     case button of
-      mouse_Left:   event.button := Button1;
-      mouse_Middle: event.button := Button2;
-      mouse_Right:  event.button := Button3;
+      LEFT_MOUSE:   event.button := Button1;
+      RIGHT_MOUSE:  event.button := Button3;
     end;
     event.same_screen := cint(0);
     event.subwindow := window;
@@ -550,9 +548,8 @@ implementation
                      @event.xbutton.state);
 
     case button of
-      mouse_Left:   Result := ((event.xbutton.state and Button1Mask) > 0);
-      mouse_Middle: Result := ((event.xbutton.state and Button2Mask) > 0);
-      mouse_Right:  Result := ((event.xbutton.state and Button3Mask) > 0);
+      LEFT_MOUSE:   Result := ((event.xbutton.state and Button1Mask) > 0);
+      RIGHT_MOUSE:  Result := ((event.xbutton.state and Button3Mask) > 0);
       else
         Result := False;
     end;

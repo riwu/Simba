@@ -444,9 +444,8 @@ end;
     Input.mi.dx:= x + Rect.left;
     Input.mi.dy:= y + Rect.Top;
     case button of
-      Mouse_Left: Input.mi.dwFlags:= MOUSEEVENTF_ABSOLUTE or MOUSEEVENTF_LEFTDOWN;
-      Mouse_Middle: Input.mi.dwFlags:= MOUSEEVENTF_ABSOLUTE or MOUSEEVENTF_MIDDLEDOWN;
-      Mouse_Right: Input.mi.dwFlags:= MOUSEEVENTF_ABSOLUTE or MOUSEEVENTF_RIGHTDOWN;
+      LEFT_MOUSE: Input.mi.dwFlags:= MOUSEEVENTF_ABSOLUTE or MOUSEEVENTF_LEFTDOWN;
+      RIGHT_MOUSE: Input.mi.dwFlags:= MOUSEEVENTF_ABSOLUTE or MOUSEEVENTF_RIGHTDOWN;
     end;
     SendInput(1,Input, sizeof(Input));
   end;
@@ -462,9 +461,8 @@ end;
     Input.mi.dx:= x + Rect.left;
     Input.mi.dy:= y + Rect.Top;
    case button of
-      Mouse_Left: Input.mi.dwFlags:= MOUSEEVENTF_ABSOLUTE or MOUSEEVENTF_LEFTUP;
-      Mouse_Middle: Input.mi.dwFlags:= MOUSEEVENTF_ABSOLUTE or MOUSEEVENTF_MIDDLEUP;
-      Mouse_Right: Input.mi.dwFlags:= MOUSEEVENTF_ABSOLUTE or MOUSEEVENTF_RIGHTUP;
+      LEFT_MOUSE: Input.mi.dwFlags:= MOUSEEVENTF_ABSOLUTE or MOUSEEVENTF_LEFTUP;
+      RIGHT_MOUSE: Input.mi.dwFlags:= MOUSEEVENTF_ABSOLUTE or MOUSEEVENTF_RIGHTUP;
     end;
     SendInput(1,Input, sizeof(Input));
   end;
@@ -472,9 +470,8 @@ end;
 function TWindow.IsMouseButtonHeld(button: TClickType): boolean;
 begin
   case button of
-     mouse_Left : Result := (GetAsyncKeyState(VK_LBUTTON) <> 0);
-     mouse_Middle : Result := (GetAsyncKeyState(VK_MBUTTON) <> 0);
-     mouse_Right : Result := (GetAsyncKeyState(VK_RBUTTON) <> 0);
+     LEFT_MOUSE : Result := (GetAsyncKeyState(VK_LBUTTON) <> 0);
+     RIGHT_MOUSE : Result := (GetAsyncKeyState(VK_RBUTTON) <> 0);
   end;
 end;
 
