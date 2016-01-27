@@ -75,7 +75,7 @@ addGlobalVar(40000, 'SQLITE_OPEN_PRIVATECACHE').isConstant := true;
 //addGlobalVar(maxLongint, 'MaxLongInt').isConstant := True;  //Don't need these...
 //addGlobalVar(maxLongint, 'MaxInt').isConstant := True;      //High works here....
 
-addGlobalType('(LEFT_MOUSE, RIGHT_MOUSE, MOVE_MOUSE, NONE_MOUSE)', 'TClickType');
+addGlobalType('(LEFT_MOUSE, RIGHT_MOUSE, MOVE_MOUSE, NONE_MOUSE, WAIT_DISAPPEAR)', 'TClickType');
 addGlobalType('UInt32', 'DWord');
 
 addGlobalType('Integer', 'TColor');

@@ -123,7 +123,7 @@ AddTypeS('PtrUInt', 'Int64');
 
 AddTypeS('TSP_Property','(SP_WriteTimeStamp,SP_OnTerminate)');
 
-AddTypeS('TClickType', '(LEFT_MOUSE, RIGHT_MOUSE, MOVE_MOUSE, NONE_MOUSE)');
+AddTypeS('TClickType', '(LEFT_MOUSE, RIGHT_MOUSE, MOVE_MOUSE, NONE_MOUSE, WAIT_DISAPPEAR)');
 
 AddTypes('TSysProc', 'record Title: string; Handle: integer; Pid: integer; Width, Height: integer; end;');
 AddTypes('TSysProcArr', 'array of TSysProc;');

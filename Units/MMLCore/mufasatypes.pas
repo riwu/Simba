@@ -88,7 +88,7 @@ type
   TBmpResizeMethod = (RM_Nearest, RM_Bilinear);
 
   TTargetWindowMode = (w_BMP, w_Window, w_HDC, w_ArrayPtr, w_XWindow);
-  TClickType = (LEFT_MOUSE, RIGHT_MOUSE, MOVE_MOUSE, NONE_MOUSE);
+  TClickType = (LEFT_MOUSE, RIGHT_MOUSE, MOVE_MOUSE, NONE_MOUSE, WAIT_DISAPPEAR);
   TMousePress = (mouse_Down, mouse_Up);
 
   PBmpThreshMethod = ^TBmpThreshMethod;
