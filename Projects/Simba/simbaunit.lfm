@@ -1504,7 +1504,6 @@ object SimbaForm: TSimbaForm
           FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF004EA3
           5778499B5103FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00
         }
-        ShortCut = 16452
         OnClick = MenuitemFillFunctionListClick
       end
       object UpdateMenuButton: TMenuItem
@@ -3487,6 +3486,10 @@ object SimbaForm: TSimbaForm
     Images = Mufasa_Image_List
     left = 448
     top = 104
+    object ActionPickColour: TAction
+      OnExecute = ButtonPickClick
+      ShortCut = 32833
+    end
     object ActionTabNext: TAction
       Caption = 'Next tab'
       OnExecute = ActionTabNextExecute
@@ -3547,7 +3550,7 @@ object SimbaForm: TSimbaForm
     object ActionRunScript: TAction
       Caption = '&Run'
       OnExecute = ActionRunExecute
-      ShortCut = 120
+      ShortCut = 32858
     end
     object ActionPauseScript: TAction
       Caption = '&Pause'
@@ -3562,6 +3565,7 @@ object SimbaForm: TSimbaForm
       Caption = 'Clear'
       ImageIndex = 4
       OnExecute = ActionClearDebugExecute
+      ShortCut = 32849
     end
     object ActionFindStart: TAction
       Caption = '&Find ...'
@@ -3630,7 +3634,7 @@ object SimbaForm: TSimbaForm
     object ActionCompileScript: TAction
       Caption = 'ActionCompileScript'
       OnExecute = ActionCompileScriptExecute
-      ShortCut = 16504
+      ShortCut = 32856
     end
     object ActionNormalSize: TAction
       Caption = 'ActionNormalSize'
@@ -3972,12 +3976,6 @@ object SimbaForm: TSimbaForm
     Interval = 100
     OnTimer = ChangeMouseStatus
     left = 448
-    top = 200
-  end
-  object NewsTimer: TTimer
-    Interval = 500
-    OnTimer = NewsTimerTimer
-    left = 488
     top = 200
   end
   object FunctionListTimer: TTimer

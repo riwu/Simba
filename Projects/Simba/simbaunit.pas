@@ -1985,9 +1985,6 @@ begin
   if not DirectoryExists(SimbaSettings.Includes.Path.Value) then
     if FirstRun then
       FormWritelnEx('Warning: The include directory specified in the Settings isn''t valid.');
-  if not DirectoryExists(SimbaSettings.Fonts.Path.Value) then
-    if FirstRun then
-      FormWritelnEx('Warning: The font directory specified in the Settings isn''t valid. Can''t load fonts now');
 
   Thread.SetPath(ScriptPath);
 
@@ -2006,7 +2003,8 @@ begin
         OCR_Fonts.SetPath(SimbaSettings.Fonts.Path.Value);
     end;
     Thread.SetFonts(OCR_Fonts.Fonts);
-  end;
+  end else if SimbaSettings.Fonts.LoadOnStartUp.Value and FirstRun then
+    FormWritelnEx('Warning: The font directory specified in the Settings isn''t valid. Can''t load fonts now');
 
   {
     We pass the entire settings to the script; it will then create a Sandbox

@@ -41,12 +41,13 @@
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <Optimizations>
-              <OptimizationLevel Value="2"/>
+              <OptimizationLevel Value="4"/>
             </Optimizations>
           </CodeGeneration>
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
           </Linking>
@@ -404,6 +405,9 @@
         <OverflowChecks Value="True"/>
         <StackChecks Value="True"/>
       </Checks>
+      <Optimizations>
+        <OptimizationLevel Value="4"/>
+      </Optimizations>
     </CodeGeneration>
     <Other>
       <CustomOptions Value="-dUseCThreads
@@ -411,6 +415,13 @@
 -dFONTDEBUG
 -dLape_CDECL
 -dStaticFFI"/>
+      <OtherDefines Count="5">
+        <Define0 Value="UseCThreads"/>
+        <Define1 Value="M_MEMORY_DEBUG"/>
+        <Define2 Value="FONTDEBUG"/>
+        <Define3 Value="Lape_CDECL"/>
+        <Define4 Value="StaticFFI"/>
+      </OtherDefines>
       <CreateMakefileOnBuild Value="True"/>
     </Other>
   </CompilerOptions>
