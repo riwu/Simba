@@ -2989,7 +2989,7 @@ begin
   FillThread := TProcThread.Create;
   FillThread.ClassProc := @CCFillCore;
 
-  UpdateTimer.OnTimer := @UpdateTimerCheck;
+ // UpdateTimer.OnTimer := @UpdateTimerCheck;
 
   Application.CreateForm(TSimbaUpdateForm, SimbaUpdateForm);
   {$IFDEF USE_EXTENSIONS}Application.CreateForm(TExtensionsForm, ExtensionsForm);{$ENDIF}

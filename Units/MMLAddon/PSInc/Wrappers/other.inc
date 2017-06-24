@@ -247,9 +247,9 @@ begin;
   Result := CurrThread.Prop.DeleteOnTerminateProcs(Proc);
 end;
 
-function ps_GetTimeRunning: LongWord; extdecl;
+function ps_GetTimeRunning: Int64; extdecl;
 begin;
-  result := GetTickCount - CurrThread.StartTime;
+  result := Windows.GetTickCount64() - CurrThread.StartTime;
 end;
 
 function ps_GetTClient : TClient; extdecl;

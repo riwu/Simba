@@ -144,7 +144,7 @@ type
       MInternet: TMInternet;
       Socks: TSocks;
       {$IFDEF USE_SQLITE}SQLite3: TMSQLite3;{$ENDIF}
-      StartTime: LongWord;
+      StartTime: Int64;
       Settings: TMMLSettings;
       SimbaSettingsFile: String;
       Sett: TMMLSettingsSandbox;
@@ -327,20 +327,37 @@ uses
 {$define extdecl := register}
 
 {Some General PS Functions here}
+function Padl(s: String; i: longInt; letter: Char): String;
+begin
+  result := StringOfChar(letter, i - length(s)) + s;
+end;
+
+function ConverTimeToStr(msTime: int64): String;
+begin
+  result:= IntToStr(msTime div (3600000)) + ':';
+  msTime:= msTime mod (3600000);
+  result:= result + PadL(IntToStr(msTime div (60000)), 2, '0') + ':';
+  msTime:= msTime mod (60000);
+  result:= result + PadL(IntToStr(msTime div (1000)), 2, '0');
+end;
+
 procedure psWriteln(str : string); extdecl;
 begin
   if Assigned(CurrThread) and CurrThread.Prop.WriteTimeStamp then
-    str := format('[%s]: %s', [TimeToStr(TimeStampToDateTime(MSecsToTimeStamp(GetTickCount - CurrThread.StartTime))), str]);
+  begin
+    str := format('[%s]: %s', [ConverTimeToStr(windows.GetTickCount64 - CurrThread.StartTime), str]);
+  end;
   if Assigned(CurrThread) and Assigned(CurrThread.DebugTo) then
-    CurrThread.DebugTo(str)
-  else
+  begin
+    CurrThread.DebugTo(str);
+  end else
     mDebugLn(str);
 end;
 
 procedure ps_DebugLn(str : string); extdecl;
 begin
   if Assigned(CurrThread) and CurrThread.Prop.WriteTimeStamp then
-    str := format('[%s]: %s', [TimeToStr(TimeStampToDateTime(MSecsToTimeStamp(GetTickCount - CurrThread.StartTime))), str]);
+    str := format('[%s]: %s', [TimeToStr(TimeStampToDateTime(MSecsToTimeStamp(windows.GetTickCount64 - CurrThread.StartTime))), str]);
   mDebugLn(str);
 end;
 
@@ -1240,13 +1257,13 @@ end;
 procedure TPSThread.Execute;
 begin
   CurrThread := Self;
-  Starttime := lclintf.GetTickCount;
+  Starttime := GetTickCount64;
 
   try
     if PSScript.Compile then
     begin
       OutputMessages;
-      psWriteln('Compiled successfully in ' + IntToStr(GetTickCount - Starttime) + ' ms.');
+      psWriteln('Compiled successfully in ' + IntToStr(GetTickCount64 - Starttime) + ' ms.');
       if CompileOnly then
         exit;
 //      if not (ScriptState = SCompiling) then
@@ -1656,7 +1673,7 @@ var
   Failed: boolean;
 begin
   CurrThread := Self;
-  Starttime := GetTickCount;
+  Starttime := GetTickCount64;
 
   try
     Failed := not Compiler.Compile();
@@ -1675,7 +1692,7 @@ begin
 
   if (not (Failed)) then
   begin
-    psWriteln('Compiled successfully in ' + IntToStr(GetTickCount - Starttime) + ' ms.');
+    psWriteln('Compiled successfully in ' + IntToStr(GetTickCount64 - Starttime) + ' ms.');
 
     if CompileOnly then
       Exit;

@@ -110,7 +110,7 @@ end;
 
 procedure Lape_GetTimeRunning(const Params: PParamArray; const Result: Pointer); lape_extdecl
 begin
-  PLongWord(Result)^ := ps_GetTimeRunning();
+  Pint64(Result)^ := ps_GetTimeRunning();
 end;
 
 procedure Lape_GetTClient(const Params: PParamArray; const Result: Pointer); lape_extdecl

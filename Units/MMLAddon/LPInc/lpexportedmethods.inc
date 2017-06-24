@@ -47,7 +47,7 @@ AddGlobalFunc('function MessageDlg(const Caption, Msg: string; DlgType: TMsgDlgT
 AddGlobalFunc('function InputQuery(const ACaption, APrompt: String; var Value: String): Boolean', @Lape_InputQuery);
 AddGlobalFunc('procedure ShowBalloonHint(const Title, Hint: string; const Timeout: Integer; const Flag: TBalloonFlags);', @Lape_ShowBalloonHint);
 AddGlobalFunc('procedure TerminateScript;', @Lape_TerminateScript);
-AddGlobalFunc('function GetTimeRunning: LongWord', @Lape_GetTimeRunning);
+AddGlobalFunc('function GetTimeRunning: Int64', @Lape_GetTimeRunning);
 {$IFNDEF FUNC_LIST}
 AddGlobalFunc('function GetSystemTime: UInt64', PPointer(Compiler['GetTickCount'].Ptr)^); //TODO: FIX!!
 {$ENDIF}

@@ -30,7 +30,7 @@
         <CompilerOptions>
           <Version Value="11"/>
           <Target>
-            <Filename Value="../../Simba.$(TargetCPU)-$(TargetOS)"/>
+            <Filename Value="../../riwu"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);$(ProjPath)../../Units/MMLAddon/PSInc;$(ProjPath)../../Units/MMLAddon/LPInc;$(ProjPath)../../Units/MMLAddon/LPInc/Wrappers;../../Units/lape"/>
@@ -409,19 +409,17 @@
         <OptimizationLevel Value="4"/>
       </Optimizations>
     </CodeGeneration>
+    <Linking>
+      <Debugging>
+        <GenerateDebugInfo Value="False"/>
+      </Debugging>
+    </Linking>
     <Other>
       <CustomOptions Value="-dUseCThreads
 -dM_MEMORY_DEBUG
 -dFONTDEBUG
 -dLape_CDECL
 -dStaticFFI"/>
-      <OtherDefines Count="5">
-        <Define0 Value="UseCThreads"/>
-        <Define1 Value="M_MEMORY_DEBUG"/>
-        <Define2 Value="FONTDEBUG"/>
-        <Define3 Value="Lape_CDECL"/>
-        <Define4 Value="StaticFFI"/>
-      </OtherDefines>
       <CreateMakefileOnBuild Value="True"/>
     </Other>
   </CompilerOptions>
